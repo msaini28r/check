@@ -16,4 +16,4 @@ jobs:
     - name: Install dependencies
       run: R -e 'install.packages(c("devtools", "testthat"))'
     - name: Check package
-      run: R -e 'devtools::check()'
+      run: R -e 'devtools::check(); message("Check complete!")'
