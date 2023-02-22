@@ -1,15 +1,19 @@
-name: Custom Check
+name: R package check
 
 on:
   push:
+    branches: [main]
   pull_request:
 
 jobs:
-  custom-check:
-    runs-on: self-hosted
+  check:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Run Custom Check
-      run: docker run docker.pkg.github.com/msaini0r/custom-check:latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: r-lib/actions/setup-r@v1
+      with:
+        r-version: '4.1.0'
+    - name: Install dependencies
+      run: R -e 'install.packages(c("devtools", "testthat"))'
+    - name: Check package
+      run: R -e 'devtools::check()'
