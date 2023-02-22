@@ -1,0 +1,16 @@
+name: Custom Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  custom-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Custom Check
+      uses: docker://docker.pkg.github.com/msaini0r/custom-check:latest
+      with:
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
